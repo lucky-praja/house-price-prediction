@@ -47,4 +47,8 @@ def predict():
     )
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True)
+=======
+    app.run(debug=True)
+>>>>>>> 101d09d1b43ec7902ce4ce7de0057b7e48f6fab2
