@@ -12,8 +12,7 @@ df = pd.get_dummies(df)
 X = df.drop("price", axis=1)
 y = df["price"]
 
-joblib.dump(X.columns, "model/columns.pkl")   # ⭐ save columns
-
+joblib.dump(X.columns, "model/columns.pkl")  
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 model = LinearRegression()
