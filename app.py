@@ -1,12 +1,14 @@
 from flask import Flask, request, render_template
 import joblib
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
 # Load model and columns
-model = joblib.load("model/model.pkl")
-columns = joblib.load("model/columns.pkl")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model = joblib.load(os.path.join(BASE_DIR, "model/model.pkl"))
+columns = joblib.load(os.path.join(BASE_DIR, "model/columns.pkl"))
 
 @app.route("/")
 def home():
@@ -24,21 +26,14 @@ def predict():
         "location": request.form["location"]
     }
 
-    # Convert to DataFrame
     df = pd.DataFrame([data])
-
-    # One-hot encoding
     df = pd.get_dummies(df)
 
-    # Add missing columns (important for ML model)
     for col in columns:
         if col not in df.columns:
             df[col] = 0
 
-    # Ensure correct column order
     df = df[columns]
-
-    # Prediction
     prediction = model.predict(df)[0]
 
     return render_template(
@@ -47,4 +42,4 @@ def predict():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
