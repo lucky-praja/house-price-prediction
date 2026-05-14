@@ -27,18 +27,18 @@ def predict():
     # Convert to DataFrame
     df = pd.DataFrame([data])
 
-    # Convert categorical
+    # One-hot encoding
     df = pd.get_dummies(df)
 
-    # Add missing columns
+    # Add missing columns (important for ML model)
     for col in columns:
         if col not in df.columns:
             df[col] = 0
 
-    # Ensure same column order
+    # Ensure correct column order
     df = df[columns]
 
-    # Predict
+    # Prediction
     prediction = model.predict(df)[0]
 
     return render_template(
@@ -47,8 +47,4 @@ def predict():
     )
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     app.run(debug=True)
-=======
-    app.run(debug=True)
->>>>>>> 101d09d1b43ec7902ce4ce7de0057b7e48f6fab2
